@@ -11,14 +11,6 @@ const SORT_FIELDS = new Set(['updatedAt', 'createdAt', 'name', 'progress'])
 
 type SortOrder = 'asc' | 'desc'
 
-type CourseWithLibraryData = Prisma.CourseGetPayload<{
-  include: {
-    _count: { select: { modules: true } }
-    progress: true
-    courseTags: { include: { tag: true } }
-  }
-}>
-
 function parsePositiveInteger(value: string | null, fallback: number): number {
   const parsed = Number.parseInt(value ?? '', 10)
   return Number.isFinite(parsed) && parsed > 0 ? parsed : fallback
@@ -152,7 +144,7 @@ export async function GET(request: NextRequest) {
     )
 
     const coursesWithProgress = await Promise.all(
-      courses.map(async (course: CourseWithLibraryData) => {
+      courses.map(async (course) => {
         const totalLessons = lessonCountByCourse.get(course.id) || 0
         const completedLessons = Math.min(
           completedCountByCourse.get(course.id) || 0,
