@@ -7,88 +7,57 @@ interface SplashScreenProps {
   minDuration?: number
 }
 
-export function SplashScreen({ onComplete, minDuration = 1500 }: SplashScreenProps) {
-  const [visible, setVisible] = React.useState(true)
-  const [logoScale, setLogoScale] = React.useState(0.8)
-  const [textOpacity, setTextOpacity] = React.useState(0)
+export function SplashScreen({ onComplete, minDuration = 550 }: SplashScreenProps) {
+  const [exiting, setExiting] = React.useState(false)
   const onCompleteRef = React.useRef(onComplete)
 
   onCompleteRef.current = onComplete
 
   React.useEffect(() => {
-    let mounted = true
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const holdDuration = reduceMotion ? 100 : minDuration
+    const exitDuration = reduceMotion ? 0 : 280
 
-    // Animation sequence
-    const timer = setTimeout(() => {
-      if (!mounted) return
-      setLogoScale(1)
-      setTextOpacity(1)
-
-      setTimeout(() => {
-        if (!mounted) return
-        setVisible(false)
-        onCompleteRef.current()
-      }, 800)
-    }, minDuration)
+    const exitTimer = window.setTimeout(() => setExiting(true), holdDuration)
+    const completeTimer = window.setTimeout(
+      () => onCompleteRef.current(),
+      holdDuration + exitDuration
+    )
 
     return () => {
-      mounted = false
-      clearTimeout(timer)
+      window.clearTimeout(exitTimer)
+      window.clearTimeout(completeTimer)
     }
   }, [minDuration])
 
-  if (!visible) return null
-
   return (
     <div
-      className="fixed inset-0 z-[100] flex items-center justify-center bg-background"
-      style={{ backgroundColor: 'var(--background)' }}
-      role="img"
-      aria-label="OfflineAcademy loading"
+      className={`fixed inset-0 z-[100] flex items-center justify-center bg-background transition-opacity duration-300 ${exiting ? 'pointer-events-none opacity-0' : 'opacity-100'}`}
+      role="status"
+      aria-live="polite"
+      aria-label="OfflineAcademy is opening"
     >
-      <div className="flex flex-col items-center gap-6">
-        {/* Animated logo - using favicon.ico */}
-        <div
-          className="relative"
-          style={{
-            transform: `scale(${logoScale})`,
-            transition: 'transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)',
-          }}
-        >
+      <div className="relative flex flex-col items-center gap-5 px-6 text-center">
+        <div className="absolute inset-0 -z-10 scale-150 rounded-full bg-primary/10 blur-3xl" />
+        <div className="flex h-24 w-24 items-center justify-center rounded-[1.75rem] border border-primary/20 bg-card shadow-2xl shadow-black/30">
           <img
-            src="/favicon16x16.ico"
-            alt="OfflineAcademy"
-            className="w-28 h-28 object-contain"
-            style={{ imageRendering: 'pixelated' }}
+            src="/logo.png"
+            alt=""
+            className="h-16 w-16 object-contain"
+            width="64"
+            height="64"
           />
         </div>
-
-        {/* App name */}
-        <div
-          className="text-center"
-          style={{
-            opacity: textOpacity,
-            transition: 'opacity 0.4s ease 0.2s',
-          }}
-        >
-          <h1 className="text-2xl font-bold tracking-tight bg-gradient-to-r from-primary to-emerald-400 bg-clip-text text-transparent">
+        <div>
+          <h1 className="text-2xl font-semibold tracking-[-0.03em] text-foreground">
             OfflineAcademy
           </h1>
-          <p className="text-sm text-muted-foreground mt-1">Your Personal Offline Learning Center</p>
+          <p className="mt-1 text-sm text-muted-foreground">
+            Your private learning library
+          </p>
         </div>
-
-        {/* Loading indicator */}
-        <div
-          className="w-48 h-1.5 bg-muted rounded-full overflow-hidden"
-          style={{
-            opacity: textOpacity,
-            transition: 'opacity 0.4s ease 0.4s',
-          }}
-        >
-          <div
-            className="h-full bg-gradient-to-r from-primary via-emerald-400 to-primary rounded-full animate-pulse"
-            style={{ width: '60%' }}
-          />
+        <div className="h-1 w-44 overflow-hidden rounded-full bg-secondary" aria-hidden="true">
+          <div className="h-full w-2/3 animate-pulse rounded-full bg-primary" />
         </div>
       </div>
     </div>
