@@ -1,0 +1,281 @@
+/* OfflineAcademy v2: a calmer, higher-contrast dark workspace for long study sessions. */
+
+html:not(.light),
+html.dark {
+  --background: 224 39% 6%;
+  --background-elevated: 222 31% 9%;
+  --background-glass: 222 28% 10% / 0.82;
+  --foreground: 210 40% 98%;
+  --foreground-muted: 215 18% 70%;
+  --foreground-subtle: 215 14% 50%;
+  --card: 222 26% 10% / 0.94;
+  --card-foreground: 210 40% 98%;
+  --card-border: 219 24% 21% / 0.78;
+  --card-border-hover: 158 58% 43% / 0.48;
+  --popover: 222 28% 9%;
+  --popover-foreground: 210 40% 98%;
+  --primary: 158 67% 47%;
+  --primary-glow: 158 72% 46% / 0.24;
+  --primary-foreground: 224 42% 6%;
+  --primary-muted: 158 67% 47% / 0.12;
+  --accent: 39 92% 61%;
+  --accent-glow: 39 92% 61% / 0.2;
+  --accent-foreground: 224 42% 6%;
+  --accent-muted: 39 92% 61% / 0.12;
+  --secondary: 222 22% 13%;
+  --secondary-foreground: 210 32% 96%;
+  --secondary-border: 220 20% 20%;
+  --muted: 222 20% 12%;
+  --muted-foreground: 215 16% 66%;
+  --border: 220 20% 18%;
+  --input: 222 22% 12%;
+  --ring: 158 67% 47%;
+  --radius: 0.9rem;
+  --radius-lg: 1.15rem;
+  --radius-xl: 1.5rem;
+}
+
+html:not(.light) body,
+html.dark body {
+  min-height: 100vh;
+  background-color: hsl(var(--background));
+  background-image:
+    radial-gradient(circle at 14% -8%, hsl(var(--primary) / 0.1), transparent 32rem),
+    radial-gradient(circle at 88% 2%, hsl(214 75% 52% / 0.07), transparent 30rem),
+    linear-gradient(180deg, hsl(224 37% 7%), hsl(var(--background)) 42rem);
+  background-attachment: fixed;
+}
+
+html:not(.light) body::before,
+html.dark body::before {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  content: '';
+  opacity: 0.2;
+  background-image: linear-gradient(hsl(0 0% 100% / 0.012) 1px, transparent 1px),
+    linear-gradient(90deg, hsl(0 0% 100% / 0.012) 1px, transparent 1px);
+  background-size: 36px 36px;
+  mask-image: linear-gradient(to bottom, black, transparent 75%);
+}
+
+html:not(.light) header.sticky,
+html.dark header.sticky {
+  border-color: hsl(var(--border) / 0.9) !important;
+  background: hsl(var(--background) / 0.84) !important;
+  box-shadow: 0 10px 36px -28px hsl(0 0% 0% / 0.92);
+  backdrop-filter: blur(22px) saturate(135%);
+}
+
+html:not(.light) header h1,
+html.dark header h1 {
+  color: hsl(var(--foreground));
+  background: none !important;
+  letter-spacing: -0.035em;
+  -webkit-text-fill-color: currentColor;
+}
+
+html:not(.light) header img[alt='OfflineAcademy'],
+html.dark header img[alt='OfflineAcademy'] {
+  filter: drop-shadow(0 7px 18px hsl(0 0% 0% / 0.35));
+}
+
+html:not(.light) header + .border-b,
+html.dark header + .border-b {
+  border-color: hsl(var(--border) / 0.82) !important;
+  background: linear-gradient(180deg, hsl(var(--background-elevated) / 0.68), transparent);
+}
+
+html:not(.light) .glass-card,
+html:not(.light) .glass-card-elevated,
+html.dark .glass-card,
+html.dark .glass-card-elevated {
+  border: 1px solid hsl(var(--card-border));
+  background:
+    linear-gradient(180deg, hsl(0 0% 100% / 0.025), transparent 42%),
+    hsl(var(--card));
+  box-shadow:
+    0 24px 58px -42px hsl(0 0% 0% / 0.95),
+    0 1px 0 hsl(0 0% 100% / 0.035) inset;
+  backdrop-filter: blur(18px) saturate(112%);
+  transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+}
+
+html:not(.light) .glass-card:hover,
+html:not(.light) .glass-card-elevated:hover,
+html.dark .glass-card:hover,
+html.dark .glass-card-elevated:hover {
+  border-color: hsl(var(--card-border-hover));
+  box-shadow:
+    0 28px 64px -38px hsl(0 0% 0% / 0.98),
+    0 18px 42px -34px hsl(var(--primary) / 0.48),
+    0 1px 0 hsl(0 0% 100% / 0.05) inset;
+  transform: translateY(-3px);
+}
+
+html:not(.light) article,
+html.dark article {
+  content-visibility: auto;
+  contain-intrinsic-size: 440px;
+}
+
+html:not(.light) .glass-card-elevated .aspect-video img,
+html.dark .glass-card-elevated .aspect-video img {
+  filter: saturate(0.9) contrast(1.04);
+}
+
+html:not(.light) .stat-badge,
+html.dark .stat-badge {
+  min-height: 2.35rem;
+  border-color: hsl(var(--secondary-border) / 0.85);
+  background: hsl(var(--secondary) / 0.72);
+  color: hsl(var(--foreground-muted));
+  box-shadow: 0 1px 0 hsl(0 0% 100% / 0.025) inset;
+}
+
+html:not(.light) .stat-badge-icon,
+html:not(.light) .stat-badge-icon-accent,
+html:not(.light) .stat-badge-icon-green,
+html:not(.light) .stat-badge-icon-blue,
+html.dark .stat-badge-icon,
+html.dark .stat-badge-icon-accent,
+html.dark .stat-badge-icon-green,
+html.dark .stat-badge-icon-blue {
+  border: 1px solid hsl(0 0% 100% / 0.045);
+}
+
+html:not(.light) .header-control,
+html.dark .header-control {
+  min-height: 2.35rem;
+  border-color: transparent;
+  color: hsl(var(--foreground-muted));
+}
+
+html:not(.light) .header-control:hover,
+html.dark .header-control:hover {
+  border-color: hsl(var(--border));
+  background: hsl(var(--secondary) / 0.88);
+  color: hsl(var(--foreground));
+  box-shadow: none;
+}
+
+html:not(.light) .btn-premium-primary,
+html.dark .btn-premium-primary {
+  border: 1px solid hsl(var(--primary) / 0.72);
+  background: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
+  font-weight: 650;
+  box-shadow: 0 12px 28px -18px hsl(var(--primary) / 0.78);
+}
+
+html:not(.light) .btn-premium-primary:hover,
+html.dark .btn-premium-primary:hover {
+  background: hsl(158 70% 52%);
+  box-shadow: 0 16px 34px -20px hsl(var(--primary) / 0.9);
+}
+
+html:not(.light) input,
+html:not(.light) textarea,
+html:not(.light) button[role='combobox'],
+html.dark input,
+html.dark textarea,
+html.dark button[role='combobox'] {
+  border-color: hsl(var(--border) / 0.95) !important;
+  background: hsl(var(--input) / 0.82) !important;
+  box-shadow: 0 1px 0 hsl(0 0% 100% / 0.025) inset;
+}
+
+html:not(.light) input:focus,
+html:not(.light) textarea:focus,
+html:not(.light) button[role='combobox']:focus,
+html.dark input:focus,
+html.dark textarea:focus,
+html.dark button[role='combobox']:focus {
+  border-color: hsl(var(--primary) / 0.7) !important;
+  box-shadow: 0 0 0 3px hsl(var(--primary) / 0.12) !important;
+}
+
+html:not(.light) [data-radix-popper-content-wrapper] > *,
+html.dark [data-radix-popper-content-wrapper] > * {
+  border-color: hsl(var(--border));
+  background: hsl(var(--popover) / 0.98);
+  box-shadow: 0 24px 64px -30px hsl(0 0% 0% / 0.95);
+  backdrop-filter: blur(20px);
+}
+
+html:not(.light) .gradient-progress,
+html.dark .gradient-progress {
+  overflow: hidden;
+  background: hsl(var(--secondary));
+  box-shadow: 0 0 0 1px hsl(var(--border) / 0.65) inset;
+}
+
+html:not(.light) progress.gradient-progress::-webkit-progress-value,
+html.dark progress.gradient-progress::-webkit-progress-value,
+html:not(.light) .gradient-progress > div,
+html.dark .gradient-progress > div {
+  background: linear-gradient(90deg, hsl(158 67% 43%), hsl(var(--primary)));
+  box-shadow: 0 0 18px -7px hsl(var(--primary) / 0.7);
+}
+
+html:not(.light) main section h2,
+html:not(.light) main > div > h2,
+html.dark main section h2,
+html.dark main > div > h2 {
+  letter-spacing: -0.025em;
+}
+
+html:not(.light) main .grid,
+html.dark main .grid {
+  align-items: stretch;
+}
+
+html:not(.light) code,
+html.dark code {
+  border: 1px solid hsl(var(--border));
+  background: hsl(var(--secondary) / 0.9) !important;
+  color: hsl(var(--foreground));
+}
+
+html:not(.light) ::selection,
+html.dark ::selection {
+  background: hsl(var(--primary) / 0.28);
+  color: hsl(var(--foreground));
+}
+
+@media (max-width: 767px) {
+  html:not(.light) header.sticky,
+  html.dark header.sticky {
+    background: hsl(var(--background) / 0.94) !important;
+  }
+
+  html:not(.light) .stat-badge,
+  html.dark .stat-badge {
+    padding-inline: 0.65rem;
+  }
+}
+
+@media (hover: none) {
+  html:not(.light) .glass-card-elevated button[aria-label^='Course actions'],
+  html.dark .glass-card-elevated button[aria-label^='Course actions'] {
+    opacity: 0.82;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html:not(.light) *,
+  html.dark * {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  html:not(.light) .glass-card:hover,
+  html:not(.light) .glass-card-elevated:hover,
+  html.dark .glass-card:hover,
+  html.dark .glass-card-elevated:hover {
+    transform: none;
+  }
+}
